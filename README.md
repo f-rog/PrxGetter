@@ -1,5 +1,5 @@
 # PrxGetter
-This is a tool to scrape (from httptunnel . ge) and check the scraped proxies.
+This is a tool to scrape (from httptunnel . ge) and check proxies.
 NOTES:
 "PrxGetterFor2" is for Python2 users and "PrxGetterFor3" is for Python3 users.
 
