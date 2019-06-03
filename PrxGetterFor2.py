@@ -11,10 +11,19 @@ def putfile(filename, content):
     file_.write(content)
     file_.close()
 
+print("""
+   ___          _____    __  __            
+  / _ \_____ __/ ______ / /_/ /____ ____   
+ / ___/ __\ \ / (_ / -_/ __/ __/ -_/ __/   
+/_/  /_/ /_\_\\___/\__/\__/\__/\__/_/      
+                                           
+""")
+
 url = "http://www.httptunnel.ge/ProxyListForFree.aspx"
 rx  = r.get(url)
 data = rx.text
-soup = BeautifulSoup(data)
+features="html.parser"
+soup = BeautifulSoup(data,features)
 goodprxs = []
 for link in soup.find_all('a'):
     a = link.get('href')
@@ -50,3 +59,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+print("Output saved on "+outname)
