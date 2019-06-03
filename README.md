@@ -17,9 +17,7 @@
     This is an awesome tool to scrape (from httptunnel . ge) and check proxies. 
     <br />
     <br />
-    <a href="https://github.com/hohohoesmad/PrxGetter/issues">Report Bug</a>
-    ·
-    <a href="hhttps://github.com/hohohoesmad/PrxGetter/issues">Request Feature</a>
+    <a href="https://github.com/hohohoesmad/PrxGetter/issues">Report Bug / Request Feature</a>
   </p>
 </p>
 
