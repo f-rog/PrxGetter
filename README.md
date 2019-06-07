@@ -14,7 +14,7 @@
   <h3 align="center">PrxGetter</h3>
 
   <p align="center">
-    This is an awesome tool to scrape (from httptunnel . ge) and check proxies. 
+    This is an awesome tool to scrape and check proxies. 
     <br />
     <br />
     <a href="https://github.com/hohohoesmad/PrxGetter/issues">Report Bug / Request Feature</a>
@@ -41,9 +41,7 @@ This project was built with the purpose of saving time when searching for proxie
 ## Getting Started
 
 You dont need major knowledge the script does everything for you :)
-Just download the file according to your Python version:
-"PrxGetterFor2" is for Python2 users.
-"PrxGetterFor3" is for Python3 users.
+Just download and enjoy.
 
 ### Prerequisites
 
@@ -53,7 +51,26 @@ There are 2 Python Packages needed for this script:
 
 ## Usage
 
-Just run the script and it will output a file named "outputxxxxx" ("xxxxx" is because they are all random numbers) and all of the live proxies will be saved there.
+  MODES:
+      * 1: Scrapes and checks proxies from HTTPTunnel.ge.
+      * 2: Tries to scrape and check proxies from a given source.
+      * 3: Checks proxies from a given file.
+  ARGUMENTS:
+      * -1 (Sets the mode to 1) -- Mode 1 does not require additional arguments.
+      * -2 (Sets the mode to 2)
+          Additional arguments:
+            The source URL to scrape the proxies from. (No '-' required)
+      * -3 (Sets the mode to 3)
+          Additional arguments:
+            The source file to check the proxies from. (No '-' required)
+      * -p (Prints the progress of the proxie checking) -- OPTIONAL
+    EXAMPLES OF USE:
+      ex1.-
+        >>> python PrxGetter.py -1
+      Doing this will only scrape and check the proxies from the original URL (HTTPTunnel.ge)
+      ex2.-
+        >>> python PrxGetter.py -2 http://pagefullofproxies.com -p
+      Doing this will try to scrape the proxies from <<pagefullofproxies.com>> and print the progress.
 
 ## Contributing
 
