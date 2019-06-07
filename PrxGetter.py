@@ -68,7 +68,7 @@ def CheckProxies(list_,output_name): # Checks a whole list and uses the given ou
                     print result
                     put_file(output_name, result)
                 else:
-                    print "[*] DEAD / %s" % (currentProxy)+"\n"
+                    print("[*] DEAD /"+str(currentProxy)+"\n")
             else:
                 if CheckProxie(currentProxy) == False:
                     result = "LIVE / %s" % (currentProxy)+"\n"
