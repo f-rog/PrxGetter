@@ -42,9 +42,9 @@ def CheckProxies(list_,output_name): # Checks a whole list and uses the given ou
 			else:
 				print (bad + proxy_ip + " - Not working")
 		# -- START OF ERROR CASES --
-		except urllib2.HTTPError, e:
+		except urllib2.HTTPError as e:
 			return e.code
-		except Exception, detail:
+		except Exception:
 			return True
 		# -- END OF ERROR CASES --
 		return False # If opening google succeeds, the proxie is live and the function will return False.
@@ -56,7 +56,7 @@ def CheckProxies(list_,output_name): # Checks a whole list and uses the given ou
 			if "-p" in sys.argv[1:]:
 				if CheckProxie(currentProxy) == False: 
 					result = "[+] LIVE / %s" % (currentProxy)+"\n"
-					print result
+					print (result)
 					put_file(output_name, result)
 				else:
 					print("[-] DEAD /"+str(currentProxy)+"\n")
@@ -77,13 +77,13 @@ logo = ("""
 """)
 
 def parse_error(errmsg):
-	print logo
+	print (logo)
 	print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
 	print(bad + "[-] " + errmsg)
 	exit(1)
 
 def parse_args():
-	print logo
+	print (logo)
 	parser = argparse.ArgumentParser(epilog="\tExample: \r\npython " + sys.argv[0] + " -t/-s http://proxysource.com/-i file.txt")
 	parser.error = parse_error
 	parser._optionals.title = "OPTIONS"
@@ -101,7 +101,7 @@ def mode1():
 			os.system('cls')
 		else:
 			os.system('clear')
-		print logo
+		print(logo)
 		print(yellow + " ~ Successful Exit")
 		exit(0)
 	except:
@@ -169,7 +169,7 @@ if __name__=="__main__":
 		elif args.source_file != None:
 			mode3(args.source_file)
 		else:
-			print logo
+			print (logo)
 			print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
 			print (bad + " too few arguments")
 			exit(0)
@@ -179,6 +179,6 @@ if __name__=="__main__":
 			os.system('cls')
 		else:
 			os.system('clear')
-		print logo
+		print (logo)
 		print(yellow + " ~ Successful Exit")
 		exit(0)
