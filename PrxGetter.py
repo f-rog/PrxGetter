@@ -109,7 +109,7 @@ def mode1():
         print("Output saved on "+output_name)
 
 def mode2(source_url):
-    if "http://" not in source_url:
+    if "://" not in source_url:
         source_url = "http://"+source_url
     try:
         site = r.get(source_url)
