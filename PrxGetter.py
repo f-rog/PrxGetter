@@ -119,10 +119,14 @@ def mode2(source_url):
         data = site.text
         proxie_expression = ur"((?:\d{1,3}\.){3}\d{1,3}):(\d+)" # RegEx to match any proxie.
         matches = re.findall(proxie_expression,data)
+        good_list = []
         if len(matches) > 1:
+            for match in matches:
+                proxy_ip = str(match[0])+":"+str(match[1])
+                good_list.append(proxy_ip)
             output_name = "output-"+str(randint(1,199999))+".txt"
             print("This might take a while . . .")
-            CheckProxies(matches,output_name) 
+            CheckProxies(good_list,output_name) 
             print("Output saved on "+output_name)
         else:
             print("No proxies found in the source.")
