@@ -32,32 +32,25 @@ def CheckProxies(list_,output_name): # Checks a whole list and uses the given ou
 	def CheckProxie(proxy_ip): # Just checks an individual proxie. 
 		try: # Tries to open google.com with the given proxie.
 			header = {'User-Agent': 'Mozilla/5.0'}
-			req= r.get('http://www.google.com', headers=header, proxies={'http' : proxy_ip})
+			req= r.get('http://www.google.com', headers=header, proxies={'http' : proxy_ip}, timeout=1)
 			if req.status_code == 200:
-				print (good + proxy_ip + " - Working")
-			else:
-				print (bad + proxy_ip + " - Not working")
+				return False
 		# -- START OF ERROR CASES --
+			else:
+				return True
 		except Exception:
 			return True
 		# -- END OF ERROR CASES --
-		return False # If opening google succeeds, the proxie is live and the function will return False.
 
 	def main(): # Main function to start the proxie checking
-		socket.setdefaulttimeout(1) # Timeout for the proxie test.
 		proxyList = list_
 		for currentProxy in proxyList:
-			if "-p" in sys.argv[1:]:
-				if CheckProxie(currentProxy) == False: 
-					result = "[+] LIVE / %s" % (currentProxy)+"\n"
-					print (result)
-					put_file(output_name, result)
-				else:
-					print("[-] DEAD /"+str(currentProxy)+"\n")
+			if CheckProxie(currentProxy) == False: 
+				result = good + currentProxy + " - Working"
+				print (result)
+				put_file(output_name, result)
 			else:
-				if CheckProxie(currentProxy) == False:
-					result = "[+] LIVE / %s" % (currentProxy)+"\n"
-					put_file(output_name, result)
+				print (bad + currentProxy + " - Not working")
 	if __name__ == '__main__':
 		main()
 # ---- END OF BASE FUNCTIONS ----
