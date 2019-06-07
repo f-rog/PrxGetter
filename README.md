@@ -65,10 +65,10 @@ There are 2 Python Packages needed for this script:
   The source file to check the proxies from. (No '-' required)<br>
 * -p (Prints the progress of the proxie checking) -- OPTIONAL<br>
 ***EXAMPLES OF USE:***<br>
-Example 1 -<br>
+Example 1 :<br>
 > python PrxGetter.py -1<br>
 Doing this will only scrape and check the proxies from the original URL (HTTPTunnel.ge)<br>
-Example 2 -<br>
+Example 2 :<br>
 > python PrxGetter.py -2 http://pagefullofproxies.com -p<br>
 Doing this will try to scrape the proxies from <<pagefullofproxies.com>> and print the progress.<br>
 
