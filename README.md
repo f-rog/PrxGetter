@@ -69,8 +69,8 @@ Example 1 :<br>
 > python PrxGetter.py -1<br>
 Doing this will only scrape and check the proxies from the original URL<br>
 Example 2 :<br>
-> python PrxGetter.py -2 http:// pagefullofproxies.com -p<br>
-Doing this will try to scrape the proxies from <<pagefullofproxies.com>> and print the progress.<br>
+> python PrxGetter.py -2 http:// pagefullofproxies .com -p<br>
+Doing this will try to scrape the proxies from pagefullofproxies .com and print the progress.<br>
 
 ## Contributing
 
