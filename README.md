@@ -36,6 +36,7 @@
 ## About The Project
 
 This project was built with the purpose of saving time when searching for proxies.
+ALSO: Support for Python 3 has been dropped.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -50,27 +51,26 @@ There are 2 Python Packages needed for this script:
 * requests (Requests)
 
 ## Usage
-
-  MODES:
-      * 1: Scrapes and checks proxies from HTTPTunnel.ge.
-      * 2: Tries to scrape and check proxies from a given source.
-      * 3: Checks proxies from a given file.
-  ARGUMENTS:
-      * -1 (Sets the mode to 1) -- Mode 1 does not require additional arguments.
-      * -2 (Sets the mode to 2)
-          Additional arguments:
-            The source URL to scrape the proxies from. (No '-' required)
-      * -3 (Sets the mode to 3)
-          Additional arguments:
-            The source file to check the proxies from. (No '-' required)
-      * -p (Prints the progress of the proxie checking) -- OPTIONAL
-    EXAMPLES OF USE:
-      ex1.-
-        >>> python PrxGetter.py -1
-      Doing this will only scrape and check the proxies from the original URL (HTTPTunnel.ge)
-      ex2.-
-        >>> python PrxGetter.py -2 http://pagefullofproxies.com -p
-      Doing this will try to scrape the proxies from <<pagefullofproxies.com>> and print the progress.
+MODES:
+* 1: Scrapes and checks proxies from HTTPTunnel.ge.
+* 2: Tries to scrape and check proxies from a given source.
+* 3: Checks proxies from a given file.
+ARGUMENTS:
+* -1 (Sets the mode to 1) -- Mode 1 does not require additional arguments.
+* -2 (Sets the mode to 2)
+Additional arguments:
+  The source URL to scrape the proxies from. (No '-' required)
+* -3 (Sets the mode to 3)
+Additional arguments:
+  The source file to check the proxies from. (No '-' required)
+* -p (Prints the progress of the proxie checking) -- OPTIONAL
+EXAMPLES OF USE:
+ex1.-
+>>> python PrxGetter.py -1
+Doing this will only scrape and check the proxies from the original URL (HTTPTunnel.ge)
+ex2.-
+>>> python PrxGetter.py -2 http://pagefullofproxies.com -p
+Doing this will try to scrape the proxies from <<pagefullofproxies.com>> and print the progress.
 
 ## Contributing
 
