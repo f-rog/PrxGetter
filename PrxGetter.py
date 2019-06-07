@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests as r
 import re
-import socket, urllib2, sys, os, datetime, argparse, colorama
+import socket, sys, os, datetime, argparse, colorama
 from colorama import Fore, Back, Style
 from bs4 import BeautifulSoup
 
@@ -31,19 +31,13 @@ def read_file(filename): # This functions purpose is to read and split the file 
 def CheckProxies(list_,output_name): # Checks a whole list and uses the given output name
 	def CheckProxie(proxy_ip): # Just checks an individual proxie. 
 		try: # Tries to open google.com with the given proxie.
-			proxy_handler = urllib2.ProxyHandler({'http': proxy_ip})
-			opener = urllib2.build_opener(proxy_handler)
-			opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-			urllib2.install_opener(opener)
-			req=urllib2.Request('http://www.google.com')
-			sock=urllib2.urlopen(req)
-			if sock.getcode() == 200:
+			header = {'User-Agent': 'Mozilla/5.0'}
+			req= r.get('http://www.google.com', headers=header, proxies={'http' : proxy_ip})
+			if req.status_code == 200:
 				print (good + proxy_ip + " - Working")
 			else:
 				print (bad + proxy_ip + " - Not working")
 		# -- START OF ERROR CASES --
-		except urllib2.HTTPError as e:
-			return e.code
 		except Exception:
 			return True
 		# -- END OF ERROR CASES --
@@ -132,7 +126,7 @@ def mode2(source_url):
 		print(bad + " An error has been encountered.")
 	else:
 		data = site.text
-		proxie_expression = ur"((?:\d{1,3}\.){3}\d{1,3}):(\d+)" # RegEx to match any proxie.
+		proxie_expression = r"((?:\d{1,3}\.){3}\d{1,3}):(\d+)" # RegEx to match any proxie.
 		matches = re.findall(proxie_expression,data)
 		good_list = []
 		if len(matches) > 1:
