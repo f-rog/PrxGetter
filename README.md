@@ -35,8 +35,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project was built with the purpose of saving time when searching for proxies.
-ALSO: Support for Python 3 has been dropped.
+This project was built with the purpose of saving time when searching for proxies.<br>
 
 <!-- GETTING STARTED -->
 ## Getting Started
