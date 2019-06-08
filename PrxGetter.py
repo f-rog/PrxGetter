@@ -25,8 +25,13 @@ def put_file(filename, content): # This functions purpose is to write (not overw
 	file_.close()
 
 def read_file(filename): # This functions purpose is to read and split the file by the end of every line and return it as an array.
-	file_ = open(filename, 'r').read().split('\n')
+	file_ = open(filename, 'r').read()
 	return file_
+
+def find_proxies(file_content):
+	proxie_expression = r"((?:\d{1,3}\.){3}\d{1,3}):(\d+)"
+	matches = re.findall(proxie_expression,file_content)
+	return matches
 
 def CheckProxies(list_,output_name): # Checks a whole list and uses the given output name
 	def CheckProxie(proxy_ip): # Just checks an individual proxie. 
@@ -147,7 +152,8 @@ def mode2(source_url):
 				print(bad + " No proxies found in the source.")
 
 def mode3(source_file):
-	list_ = read_file(source_file)
+	file_content = read_file(source_file)
+	list_ = find_proxies(file_content)
 	if len(list_) == 0:
 		print(bad + " No proxies")
 	else:
