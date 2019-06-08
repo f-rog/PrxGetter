@@ -146,15 +146,19 @@ def mode2(source_url):
 	try:
 		site = r.get(source_url)
 		data = site.text
+	except:
+		print(bad + " An error has been encountered.")
+	else:
 		proxie_expression = r"((?:\d{1,3}\.){3}\d{1,3}):(\d+)" # RegEx to match any proxie.
 		matches = re.findall(proxie_expression,data)
 		good_list = []
-		print("\n" + info + "Proxies loaded.")
 		if len(matches) > 1:
 			for match in matches:
 				proxy_ip = str(match[0])+":"+str(match[1])
 				good_list.append(proxy_ip)
-				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
+			output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
+			print("\n" + info + "Proxies loaded.")
+			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 			CheckProxies(good_list,output_name)
 		else:
 			ip_expression = r"((?:\d{1,3}\.){3}\d{1,3})"
@@ -167,13 +171,11 @@ def mode2(source_url):
 					good_list.append(proxy_ip1)
 					good_list.append(proxy_ip2)
 					good_list.append(proxy_ip3)
-					output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-					print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
+				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
+				print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 				CheckProxies(good_list,output_name)
 			else:
 				print(bad + " No proxies found in the source.")
-	except:
-		print(bad + " An error has been encountered.")
 
 def mode3(source_file):
 	try:
