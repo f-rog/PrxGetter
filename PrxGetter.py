@@ -48,7 +48,7 @@ def CheckProxies(list_,output_name): # Checks a whole list and uses the given ou
 			if CheckProxie(currentProxy) == False: 
 				result = good + currentProxy + " - Working"
 				print (result)
-				put_file(output_name, result)
+				put_file(output_name, currentProxy + " - Working"+"\n")
 			else:
 				print (bad + currentProxy + " - Not working")
 	if __name__ == '__main__':
