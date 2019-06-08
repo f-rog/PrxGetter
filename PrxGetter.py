@@ -130,7 +130,21 @@ def mode2(source_url):
 			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 			CheckProxies(good_list,output_name)
 		else:
-			print(bad + " No proxies found in the source.")
+			ip_expression = r"((?:\d{1,3}\.){3}\d{1,3})"
+			matches2 = re.findall(ip_expression,data)
+			if len(matches2) > 1:
+				for match in matches2:
+					proxy_ip1 = str(match)+":"+"8080"
+					proxy_ip2 = str(match)+":"+"3128"
+					proxy_ip3 = str(match)+":"+"80"
+					good_list.append(proxy_ip1)
+					good_list.append(proxy_ip2)
+					good_list.append(proxy_ip3)
+				output_name = "output "+(DT.strftime("%Y-%m-%d %H%M"))+".txt"
+				print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
+				CheckProxies(good_list,output_name)
+			else:
+				print(bad + " No proxies found in the source.")
 
 def mode3(source_file):
 	list_ = read_file(source_file)
