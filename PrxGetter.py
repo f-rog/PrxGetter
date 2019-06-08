@@ -86,7 +86,7 @@ def parse_args():
 	parser.add_argument("-t", "--tunnel", help="check proxies from httptunnel.ge", action="store_true", default=False)
 	parser.add_argument("-s", "--source", help="check proxies from other source", action='store', dest='source_url', default=None)
 	parser.add_argument("-i", "--input", help="check proxies from local file", action="store", dest="source_file", default=None)
-	parser.add_argument("-l", "--limit",required=False, type=int, help="limit of proxies to scrape", default=1000)
+	parser.add_argument("-l", "--limit",required=False, type=int, help="limit of proxies to scrape", default=100)
 	return parser.parse_args()
 
 def mode1():
@@ -137,12 +137,12 @@ def mode2(source_url):
 		proxie_expression = r"((?:\d{1,3}\.){3}\d{1,3}):(\d+)" # RegEx to match any proxie.
 		matches = re.findall(proxie_expression,data)
 		good_list = []
+		print("\n" + info + "Proxies loaded.")
 		if len(matches) > 1:
 			for match in matches:
 				proxy_ip = str(match[0])+":"+str(match[1])
 				good_list.append(proxy_ip)
-				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-				print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
+				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt”
 			CheckProxies(good_list,output_name)
 		else:
 			ip_expression = r"((?:\d{1,3}\.){3}\d{1,3})"
@@ -171,7 +171,7 @@ def mode3(source_file):
 			print(bad + " No proxies")
 		else:
 			output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
+			print(info + “ Proxies loaded”)
 			CheckProxies(list_,output_name) 
 	except IOError:
 			print(bad + "File not found. Please verify the file name")
