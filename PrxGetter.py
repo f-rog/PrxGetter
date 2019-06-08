@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests as r
 import re
-import socket, sys, os, datetime, argparse, colorama
+import socket, sys, os, time, datetime, argparse, colorama
 from colorama import Fore, Back, Style
 from bs4 import BeautifulSoup
 
@@ -74,10 +74,9 @@ logo = ("""
 """)
 
 def parse_error(errmsg):
-	print (logo)
 	print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
 	print(bad + "[-] " + errmsg)
-	exit(1)
+	sys.exit(1)
 
 def parse_args():
 	print (logo)
@@ -87,47 +86,53 @@ def parse_args():
 	parser.add_argument("-t", "--tunnel", help="check proxies from httptunnel.ge", action="store_true", default=False)
 	parser.add_argument("-s", "--source", help="check proxies from other source", action='store', dest='source_url', default=None)
 	parser.add_argument("-i", "--input", help="check proxies from local file", action="store", dest="source_file", default=None)
+	parser.add_argument("-l", "--limit",required=False, type=int, help="limit of proxies to scrape", default=1000)
 	return parser.parse_args()
 
 def mode1():
 	try:
 		site  = r.get("http://www.httptunnel.ge/ProxyListForFree.aspx")
-	except KeyboardInterrupt:
-		print ("\n" * 80)
-		if 'win' in sys.platform:
-			os.system('cls')
-		else:
-			os.system('clear')
-		print(logo)
-		print(yellow + " ~ Successful Exit")
-		exit(0)
-	except:
-		print(bad + "Is HTTPTunnel.ge offline?")
-	else:
 		data = site.text
 		# -- START OF BEAUTIFUL SOUP CONSTRUCTOR --
 		features="html.parser"
 		soup = BeautifulSoup(data,features)
 		# -- END OF BEAUTIFUL SOUP CONSTRUCTOR --
 		proxy_list = []
+		print("\n" + info + "Proxies loaded.")
 		for link in soup.find_all('a'):
 			all_hrefs = link.get('href')
 			if "ProxyChecker" in all_hrefs:
 				good_line = all_hrefs.split("?p=")
 				if len(good_line) > 1:
-					proxy_list.append(good_line[1])
-		output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-		print(good + "Output saved on "+output_name+"\n" + que + "Checking proxies. This might take a while . . .")
-		CheckProxies(proxy_list,output_name)
+					try:
+						if len(proxy_list) == args.limit:
+							output_name = "output "+(DT.strftime("%Y-%m-%d %H%M"))+".txt"
+							CheckProxies(proxy_list,output_name)
+							break
+						else:
+							proxy_list.append(good_line[1])
+							continue
+					except KeyboardInterrupt:
+						if sys.version_info[0] == 3:
+							answer = input(info + ' are you sure you want to exit? y/n: ').strip().lower()
+						else:
+							answer = raw_input(info + ' are you sure you want to exit? y/n: ').strip().lower()
+							
+						if answer == "yes" or answer == "y":
+							sys.exit(0)
+						elif answer == "no" or answer == "n":
+							continue
+
+	except r.exceptions.RequestException as e:
+		print(bad + e + "Is HTTPTunnel.ge offline?")
+	
+
 
 def mode2(source_url):
 	if "://" not in source_url:
 		source_url = "http://"+source_url
 	try:
 		site = r.get(source_url)
-	except:
-		print(bad + " An error has been encountered.")
-	else:
 		data = site.text
 		proxie_expression = r"((?:\d{1,3}\.){3}\d{1,3}):(\d+)" # RegEx to match any proxie.
 		matches = re.findall(proxie_expression,data)
@@ -136,8 +141,8 @@ def mode2(source_url):
 			for match in matches:
 				proxy_ip = str(match[0])+":"+str(match[1])
 				good_list.append(proxy_ip)
-			output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
+				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
+				print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 			CheckProxies(good_list,output_name)
 		else:
 			ip_expression = r"((?:\d{1,3}\.){3}\d{1,3})"
@@ -150,24 +155,27 @@ def mode2(source_url):
 					good_list.append(proxy_ip1)
 					good_list.append(proxy_ip2)
 					good_list.append(proxy_ip3)
-				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-				print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
+					output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
+					print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 				CheckProxies(good_list,output_name)
 			else:
 				print(bad + " No proxies found in the source.")
+	except:
+		print(bad + " An error has been encountered.")
 
 def mode3(source_file):
-	file_content = read_file(source_file)
-	list_ = find_proxies(file_content)
-	if len(list_) == 0:
-		print(bad + " No proxies")
-	else:
-		output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-		try:
+	try:
+		file_content = read_file(source_file)
+		list_ = find_proxies(file_content)
+		if len(list_) == 0:
+			print(bad + " No proxies")
+		else:
+			output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
 			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 			CheckProxies(list_,output_name) 
-		except:
-			print(bad + " Invalid proxies / Fatal error")
+	except IOError:
+			print(bad + "File not found. Please verify the file name")
+
 				
 
 if __name__=="__main__":
@@ -181,7 +189,6 @@ if __name__=="__main__":
 		elif args.source_file != None:
 			mode3(args.source_file)
 		else:
-			print (logo)
 			print("Usage: python " + sys.argv[0] + " [Options] use -h for help")
 			print (bad + " too few arguments")
 			exit(0)
