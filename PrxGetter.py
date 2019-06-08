@@ -13,6 +13,7 @@ red = Fore.RED
 yellow = Fore.YELLOW
 end = Style.RESET_ALL
 info = Fore.YELLOW + '[!]' + Style.RESET_ALL
+prog = Fore.MAGENTA + '[&]' + Style.RESET_ALL
 que = Fore.BLUE + '[*]' + Style.RESET_ALL
 bad = Fore.RED + '[-]' + Style.RESET_ALL
 good = Fore.GREEN + '[+]' + Style.RESET_ALL
@@ -54,13 +55,24 @@ def CheckProxies(list_,output_name): # Checks a whole list and uses the given ou
 
 	def main(): # Main function to start the proxie checking
 		proxyList = list_
+		progress = 1
+		output_stream = sys.stdout
 		for currentProxy in proxyList:
-			if CheckProxie(currentProxy) == False: 
+			if CheckProxie(currentProxy) == False:
+				progress += 1 
 				result = good + currentProxy + " - Working"
 				print (result)
-				put_file(output_name, currentProxy + " - Working"+"\n")
+				put_file(output_name, currentProxy + " - Working"+"\n")				
 			else:
+				progress += 1
 				print (bad + currentProxy + " - Not working")
+			if float(progress*100) / len(proxyList) - 0.5 >= 100:
+				output_stream.write(prog+' Progress: '+str(100)+" %"+'\r')
+				output_stream.flush()
+			else:
+				output_stream.write(prog+' Progress: '+str(float(progress*100) / len(proxyList) - 0.5)+" %"+'\r')
+				output_stream.flush()	
+		output_stream.write('\n')
 	if __name__ == '__main__':
 		main()
 # ---- END OF BASE FUNCTIONS ----
