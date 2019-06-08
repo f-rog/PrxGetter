@@ -142,7 +142,7 @@ def mode2(source_url):
 			for match in matches:
 				proxy_ip = str(match[0])+":"+str(match[1])
 				good_list.append(proxy_ip)
-				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt”
+				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
 			CheckProxies(good_list,output_name)
 		else:
 			ip_expression = r"((?:\d{1,3}\.){3}\d{1,3})"
@@ -171,7 +171,7 @@ def mode3(source_file):
 			print(bad + " No proxies")
 		else:
 			output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
-			print(info + “ Proxies loaded”)
+			print(info + " Proxies loaded")
 			CheckProxies(list_,output_name) 
 	except IOError:
 			print(bad + "File not found. Please verify the file name")
