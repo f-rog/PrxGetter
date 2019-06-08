@@ -31,7 +31,12 @@ def read_file(filename): # This functions purpose is to read and split the file 
 def find_proxies(file_content):
 	proxie_expression = r"((?:\d{1,3}\.){3}\d{1,3}):(\d+)"
 	matches = re.findall(proxie_expression,file_content)
-	return matches
+	good_list = []
+	if len(matches) > 1:
+		for match in matches:
+			proxy_ip = str(match[0])+":"+str(match[1])
+			good_list.append(proxy_ip)
+	return good_list
 
 def CheckProxies(list_,output_name): # Checks a whole list and uses the given output name
 	def CheckProxie(proxy_ip): # Just checks an individual proxie. 
@@ -111,7 +116,7 @@ def mode1():
 				good_line = all_hrefs.split("?p=")
 				if len(good_line) > 1:
 					proxy_list.append(good_line[1])
-		output_name = "output "+(DT.strftime("%Y-%m-%d %H%M"))+".txt"
+		output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
 		print(good + "Output saved on "+output_name+"\n" + que + "Checking proxies. This might take a while . . .")
 		CheckProxies(proxy_list,output_name)
 
@@ -131,7 +136,7 @@ def mode2(source_url):
 			for match in matches:
 				proxy_ip = str(match[0])+":"+str(match[1])
 				good_list.append(proxy_ip)
-			output_name = "output "+(DT.strftime("%Y-%m-%d %H%M"))+".txt"
+			output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
 			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 			CheckProxies(good_list,output_name)
 		else:
@@ -145,7 +150,7 @@ def mode2(source_url):
 					good_list.append(proxy_ip1)
 					good_list.append(proxy_ip2)
 					good_list.append(proxy_ip3)
-				output_name = "output "+(DT.strftime("%Y-%m-%d %H%M"))+".txt"
+				output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
 				print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 				CheckProxies(good_list,output_name)
 			else:
@@ -157,7 +162,7 @@ def mode3(source_file):
 	if len(list_) == 0:
 		print(bad + " No proxies")
 	else:
-		output_name = "output "+(DT.strftime("%Y-%m-%d %H%M"))+".txt"
+		output_name = "output"+(DT.strftime("%Y-%m-%d-%H%M"))+".txt"
 		try:
 			print(good + " Output saved on "+output_name+"\n" + que + " Checking proxies. This might take a while . . .")
 			CheckProxies(list_,output_name) 
